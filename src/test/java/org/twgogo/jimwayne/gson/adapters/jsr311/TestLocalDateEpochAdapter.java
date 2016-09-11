@@ -30,9 +30,11 @@ public class TestLocalDateEpochAdapter {
         this.parser.parse(this.gson.toJson(myObj.setDate(LocalDate.MAX)))
             .getAsJsonObject()
             .get("date").getAsLong());
+    
+    LocalDate now = LocalDate.now();
     Assert.assertEquals(
-        LocalDate.now().toEpochDay(), 
-        this.parser.parse(this.gson.toJson(myObj.setDate(LocalDate.now())))
+        now.toEpochDay(), 
+        this.parser.parse(this.gson.toJson(myObj.setDate(now)))
             .getAsJsonObject()
             .get("date").getAsLong());
   }
@@ -54,10 +56,11 @@ public class TestLocalDateEpochAdapter {
         LocalDate.MAX.toEpochDay(), 
         myObj.getDate().toEpochDay());
     
-    json.addProperty("date", LocalDate.now().toEpochDay());
+    LocalDate now = LocalDate.now();
+    json.addProperty("date", now.toEpochDay());
     myObj = this.gson.fromJson(json, MyObject.class);
     Assert.assertEquals(
-        LocalDate.now().toEpochDay(), 
+        now.toEpochDay(), 
         myObj.getDate().toEpochDay());
   }
   
