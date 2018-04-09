@@ -1,9 +1,10 @@
-package org.twgogo.jimwayne.gson.adapters.jsr311;
+package org.twgogo.jimwayne.gson.adapters.jsr310;
 
 import java.time.Instant;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.twgogo.jimwayne.gson.adapters.jsr310.InstantAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package org.twgogo.jimwayne.gson.adapters.jsr311;
+package org.twgogo.jimwayne.gson.adapters.jsr310;
 
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;

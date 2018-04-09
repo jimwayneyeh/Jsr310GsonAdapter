@@ -1,19 +1,20 @@
-package org.twgogo.jimwayne.gson.adapters.jsr311;
+package org.twgogo.jimwayne.gson.adapters.jsr310;
 
 import java.time.LocalDate;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.twgogo.jimwayne.gson.adapters.jsr310.LocalDateEpochAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class TestLocalDateIsoAdapter {
+public class TestLocalDateEpochAdapter {
   private JsonParser parser = new JsonParser();
   private Gson gson = new GsonBuilder()
-      .registerTypeAdapter(LocalDate.class, new LocalDateIsoAdapter())
+      .registerTypeAdapter(LocalDate.class, new LocalDateEpochAdapter())
       .create();
   
   @Test
@@ -21,20 +22,22 @@ public class TestLocalDateIsoAdapter {
     MyObject myObj = new MyObject();
     
     Assert.assertEquals(
-        LocalDate.MIN.toString(), 
+        LocalDate.MIN.toEpochDay(), 
         this.parser.parse(this.gson.toJson(myObj.setDate(LocalDate.MIN)))
             .getAsJsonObject()
-            .get("date").getAsString());
+            .get("date").getAsLong());
     Assert.assertEquals(
-        LocalDate.MAX.toString(), 
+        LocalDate.MAX.toEpochDay(), 
         this.parser.parse(this.gson.toJson(myObj.setDate(LocalDate.MAX)))
             .getAsJsonObject()
-            .get("date").getAsString());
+            .get("date").getAsLong());
+    
+    LocalDate now = LocalDate.now();
     Assert.assertEquals(
-        LocalDate.now().toString(), 
-        this.parser.parse(this.gson.toJson(myObj.setDate(LocalDate.now())))
+        now.toEpochDay(), 
+        this.parser.parse(this.gson.toJson(myObj.setDate(now)))
             .getAsJsonObject()
-            .get("date").getAsString());
+            .get("date").getAsLong());
   }
   
   @Test
@@ -42,23 +45,24 @@ public class TestLocalDateIsoAdapter {
     MyObject myObj = null;
     JsonObject json = new JsonObject();
     
-    json.addProperty("date", LocalDate.MIN.toString());
+    json.addProperty("date", LocalDate.MIN.toEpochDay());
     myObj = this.gson.fromJson(json, MyObject.class);
     Assert.assertEquals(
-        LocalDate.MIN.toString(), 
-        myObj.getDate().toString());
+        LocalDate.MIN.toEpochDay(), 
+        myObj.getDate().toEpochDay());
     
-    json.addProperty("date", LocalDate.MAX.toString());
+    json.addProperty("date", LocalDate.MAX.toEpochDay());
     myObj = this.gson.fromJson(json, MyObject.class);
     Assert.assertEquals(
-        LocalDate.MAX.toString(), 
-        myObj.getDate().toString());
+        LocalDate.MAX.toEpochDay(), 
+        myObj.getDate().toEpochDay());
     
-    json.addProperty("date", LocalDate.now().toString());
+    LocalDate now = LocalDate.now();
+    json.addProperty("date", now.toEpochDay());
     myObj = this.gson.fromJson(json, MyObject.class);
     Assert.assertEquals(
-        LocalDate.now().toString(), 
-        myObj.getDate().toString());
+        now.toEpochDay(), 
+        myObj.getDate().toEpochDay());
   }
   
   private class MyObject {
