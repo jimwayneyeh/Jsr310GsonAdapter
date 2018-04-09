@@ -1,3 +1,3 @@
-# Jsr311GsonAdapter
+# Jsr310GsonAdapter
 
-A extension library which provide adapters for converting JSR-311 in Gson.
+A extension library which provide adapters for converting JSR-310 in Gson.
